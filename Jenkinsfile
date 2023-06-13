@@ -13,7 +13,7 @@ pipeline {
        stage('build Docker Image') {
             steps {
                 script {
-                     build image
+                     //build image
                     docker.build("069279771141.dkr.ecr.us-east-2.amazonaws.com/netflix-app:v1.0.0.RELEASE")
                }
             }
