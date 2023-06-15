@@ -1,6 +1,6 @@
 # Define the provider for AWS
 provider "aws" {
-  region = "us-east-2"
+  region = "us-east-1"
 }
 
 
@@ -41,8 +41,8 @@ resource "aws_ecs_service" "my_service" {
   desired_count   = 1
   launch_type     = "FARGATE"
   network_configuration {
-    subnets           = ["subnet-07244e038967afff0"]
-    security_groups   = ["sg-0c93b29eb229bb6a5"]
+    subnets           = ["subnet-06faca13e9d69b503"]
+    security_groups   = ["sg-04b2d0dbc708684bf"]
     assign_public_ip = true
   }
 }
