@@ -1,3 +1,8 @@
+# Define the provider for AWS
+provider "aws" {
+  region = "us-east-2"  
+}
+
 # Create an ECS cluster
 resource "aws_ecs_cluster" "my_cluster" {
   name = "abdu-ecs-cluster"
