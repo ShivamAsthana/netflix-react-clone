@@ -20,12 +20,12 @@ pipeline {
         stage ("terraform init") {
             steps {
                 sh "terraform init" 
-         /*   }
+            }
         }
   
         stage ("plan") {
             steps {
-                sh "terraform plan"/*
+                sh "terraform plan"
             }
         }
         stage (" Action") {
