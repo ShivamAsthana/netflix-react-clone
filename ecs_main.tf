@@ -1,5 +1,6 @@
 # Define the provider for AWS
 provider "aws" {
+  version = "~> 4.0"
   region = "us-east-2"
 }
 
