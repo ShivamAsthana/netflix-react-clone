@@ -1,7 +1,4 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-//import firebase from "firebase";
+import firebase from "firebase";
 const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyDqX5qoDon623Ch2QzTMriOZvk05J3aDFA",
   authDomain: "netflix-clone-5cd59.firebaseapp.com",
