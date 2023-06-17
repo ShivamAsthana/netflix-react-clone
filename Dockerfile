@@ -10,7 +10,7 @@ WORKDIR /app
 COPY . .
 # install node modules and build assets
 #RUN npm update
-RUN yarn install && yarn run build
+RUN yarn install && yarn run --silent lint /file/path && yarn run build
 
 # nginx state for serving content
 FROM nginx:alpine
