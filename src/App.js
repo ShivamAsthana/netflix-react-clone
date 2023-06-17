@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import MainComponent from "./components/Main-Component";
 import Banner from "./components/Banner";
 import UseLog from "./components/UseLog";
-import { auth } from "./firebase";
+import { getAuth } from "./firebase/auth";
 function App(props) {
   const [LoginStatus, SetLoginStatus] = useState(false);
   const [username, setusername] = useState("");
