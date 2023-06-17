@@ -16,13 +16,14 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 069279771141.dkr.ecr.us-east-2.amazonaws.com
-      - IMAGE_REPO_NAME=069279771141.dkr.ecr.us-east-2.amazonaws.com/netflix-app
+      - REPOSITORY_URI=${REPO_ECR}
       - IMAGE_TAG=latest
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...          
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
  
 
       
