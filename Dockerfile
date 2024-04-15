@@ -1,24 +1,17 @@
-# Multi-stage
-# 1) Node image for building frontend assets
-# 2) nginx stage to serve frontend assets
-
-# Name the node stage "builder"
-FROM node:lts-buster-slim AS builder
-# Set working directory
+FROM node:16.17.0-alpine as builder
 WORKDIR /app
-# Copy all files from current directory to working dir in image
+COPY ./package.json .
+COPY ./yarn.lock .
+RUN yarn install
 COPY . .
-# install node modules and build assets
-#RUN npm update
-RUN yarn install && yarn run --silent lint /file/path && yarn run build
+ARG TMDB_V3_API_KEY
+ENV VITE_APP_TMDB_V3_API_KEY=${TMDB_V3_API_KEY}
+ENV VITE_APP_API_ENDPOINT_URL="https://api.themoviedb.org/3"
+RUN yarn build
 
-# nginx state for serving content
-FROM nginx:alpine
-# Set working directory to nginx asset directory
+FROM nginx:stable-alpine
 WORKDIR /usr/share/nginx/html
-# Remove default nginx static assets
 RUN rm -rf ./*
-# Copy static assets from builder stage
-COPY --from=builder /app/build .
-# Containers run nginx with global directives and daemon off
+COPY --from=builder /app/dist .
+EXPOSE 80
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
