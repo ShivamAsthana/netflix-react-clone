@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    options {
+        timeout(time: 20, unit: 'MINUTES')
+    }
+    stages{
+        // NPM dependencies
+        stage('pull npm dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+       stage('build Docker Image') {
+            steps {
+                script {
+                     //build image
+                    docker.build("031602498148.dkr.ecr.us-east-1.amazonaws.com/netflix-clone:latest")
+               }
+            }
+        }
+        stage('Trivy Scan (Aqua)') {
+            steps {
+                sh 'trivy image --format template --output trivy_report.html 069279771141.dkr.ecr.us-east-2.amazonaws.com/netflix-app:v1.0.0.RELEASE'
+            }
+       }
+        stage('Push to ECR') {
+            steps {
+                script{
+                    //https://<AwsAccountNumber>.dkr.ecr.<region>.amazonaws.com/netflix-app', 'ecr:<region>:<credentialsId>
+                    docker.withRegistry('https://031602498148.dkr.ecr.us-east-1.amazonaws.com/netflix-clone', 'ecr:us-east-2:abdurahim-ecr') {
+                    // build image
+                    def myImage = docker.build("031602498148.dkr.ecr.us-east-1.amazonaws.com/netflix-clone:latest")
+                    // push image
+                    myImage.push()
+                    }
+                }
+            }
+        }
+        
+    }
+}
